@@ -143,7 +143,7 @@ const Update = () => {
     };
 
     const handleCloudUploadIconClick = () => {
-        window.open('https://sumitsharevault.netlify.app/', '_blank');
+        window.open('https://college-seek.vercel.app/', '_blank');
     };
 
     return (

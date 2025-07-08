@@ -176,7 +176,7 @@ const Login = ({ setUserAuthenticated }) => {
     };
 
     const handleButtonClick = () => {
-        window.open('https://sumitspassgenius.netlify.app/', '_blank');
+        window.open('https://college-seek.vercel.app/', '_blank');
     };
 
     return (

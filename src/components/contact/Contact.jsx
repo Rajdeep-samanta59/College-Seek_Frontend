@@ -32,20 +32,20 @@ const Contact = () => {
                 <Text variant="h5">
                     If you have the inclination, take a moment to view some of my cherished projects through
                     <Box component="span" style={{ marginLeft: 5 }}>
-                        <Link href="https://github.com/sumit334" color="inherit" target="_blank"><GitHub /></Link>
+                        <Link href="https://github.com/Rajdeep-samanta59" color="inherit" target="_blank"><GitHub /></Link>
                     </Box>.  <br />
                     Embark on a journey of innovation! If you have a project in mind or simply fancy a delightful conversation, feel free to connect with me on 
                     <Box component="span" style={{ marginLeft: 5 }}>
-                        <Link href="https://www.instagram.com/sumit_agarwal_334/" color="inherit" target="_blank">
+                        <Link href="https://www.linkedin.com/in/contact-rajdeep//" color="inherit" target="_blank">
                             <Instagram />
                         </Link>
                     </Box><br /><br />
                     For any inquiries, collaboration opportunities, or a delightful conversation, I welcome you to connect with me via email 
-                    <Link href="mailto:sumitagar2003@gmail.com?Subject=This is a subject" target="_blank" color="inherit">
+                    <Link href="mailto:samantarajdeep59@gmail.com?Subject=This is a subject" target="_blank" color="inherit">
                         <Email />
                     </Link> . <br />Let's craft something extraordinary together!
                     Explore my portfolio at 
-                    <Link href="https://sumitsportfolioweb.netlify.app/" target="_blank" color="inherit">
+                    <Link href="https://college-seek.vercel.app/" target="_blank" color="inherit">
                         <Language />
                     </Link>.
                 </Text>
