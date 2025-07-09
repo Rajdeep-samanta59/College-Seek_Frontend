@@ -260,7 +260,7 @@ const Login = ({ setUserAuthenticated }) => {
                             name="name"
                             label="Enter Name"
                         />
-                        <Button onClick={handleButtonClick}></Button>
+                        <Button onClick={handleButtonClick}>Generate Password</Button>
 
                         {error && <Error>{error}</Error>}
                         {loading ? (
