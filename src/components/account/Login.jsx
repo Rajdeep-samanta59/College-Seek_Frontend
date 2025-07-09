@@ -176,7 +176,7 @@ const Login = ({ setUserAuthenticated }) => {
     };
 
     const handleButtonClick = () => {
-        window.open('https://college-seek.vercel.app/', '_blank');
+        window.open('https://pass-genius.vercel.app/', '_blank');
     };
 
     return (
