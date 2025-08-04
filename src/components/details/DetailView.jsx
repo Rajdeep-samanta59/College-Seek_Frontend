@@ -1,81 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import {
-  Box,
-  Typography,
-  styled,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-} from '@mui/material';
-import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
-import { Delete, Edit } from '@mui/icons-material';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { API } from '../../service/api';
 import { DataContext } from '../../context/DataProvider';
 import Comments from './comments/Comments';
-
-const Container = styled(Box)(({ theme }) => ({
-  margin: '50px 100px',
-  [theme.breakpoints.down('md')]: {
-    margin: 0,
-  },
-}));
-
-const Image = styled('img')({
-  width: '100%',
-  height: '50vh',
-  objectFit: 'cover',
-  cursor: 'pointer',
-});
-
-const EditIcon = styled(Edit)`
-  margin: 5px;
-  padding: 5px;
-  border: 1px solid #878787;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #4caf50 !important; /* Change to your desired color */
-  }
-`;
-
-const DeleteIcon = styled(Delete)`
-  margin: 5px;
-  padding: 5px;
-  border: 1px solid #878787;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #ff5757; /* Change to your desired color */
-  }
-`;
-
-const Heading = styled(Typography)`
-  font-size: 38px;
-  font-weight: 600;
-  text-align: center;
-  margin: 50px 0 10px 0;
-  word-break: break-word;
-`;
-
-const Description = styled(Typography)`
-  word-break: break-word;
-`;
-
-const Author = styled(Box)(({ theme }) => ({
-  color: '#878787',
-  display: 'flex',
-  margin: '20px 0',
-  [theme.breakpoints.down('sm')]: {
-    display: 'block',
-  },
-}));
 
 const DetailView = () => {
   const [post, setPost] = useState([]);
@@ -121,54 +48,90 @@ const DetailView = () => {
     window.open(post.picture, '_blank');
   };
 
-  const handleFileClick=()=>{
+  const handleFileClick = () => {
     window.open(post.fileUp, '_blank');
-  }
+  };
 
   return (
-    <Container>
-      <Image src={post.picture || url} alt="post" onClick={handleImageClick} />
-      <Box style={{ float: 'right' }}>
+    <div className="mx-12 my-12 md:mx-0">
+      <img 
+        src={post.picture || url} 
+        alt="post" 
+        onClick={handleImageClick}
+        className="w-full h-96 object-cover cursor-pointer"
+      />
+      
+      <div className="float-right">
         {account.username === post.username && (
           <>
             <Link to={`/update/${post._id}`}>
-              <EditIcon color="primary" />
+              <button className="m-1.5 p-1.5 border border-gray-500 rounded-lg cursor-pointer transition-colors duration-300 hover:bg-green-500 hover:text-white">
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                </svg>
+              </button>
             </Link>
-            <DeleteIcon onClick={deleteBlog} color="error" />
+            <button 
+              onClick={deleteBlog} 
+              className="m-1.5 p-1.5 border border-gray-500 rounded-lg cursor-pointer transition-colors duration-300 hover:bg-red-500 hover:text-white"
+            >
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+              </svg>
+            </button>
           </>
         )}
-      </Box>
-      <Heading>{post.title}</Heading>
-      <Author>
-        <Link to={`/?username=${post.username}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-          <Typography>
-            Author: <span style={{ fontWeight: 600 }}>{post.username}</span>
-          </Typography>
-          <Typography>
-            Download File: <CloudDownloadIcon onClick={handleFileClick}/> 
-          </Typography>
+      </div>
+      
+      <h1 className="text-4xl font-semibold text-center my-12 break-words">
+        {post.title}
+      </h1>
+      
+      <div className="text-gray-500 flex my-5 sm:block">
+        <Link to={`/?username=${post.username}`} className="no-underline text-inherit">
+          <p>
+            Author: <span className="font-semibold">{post.username}</span>
+          </p>
+          <p>
+            Download File: 
+            <button onClick={handleFileClick} className="ml-1">
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM12 17l-5-5h3V9h4v3h3l-5 5z"/>
+              </svg>
+            </button>
+          </p>
         </Link>
-        <Typography style={{ marginLeft: 'auto' }}>{new Date(post.createdDate).toDateString()}</Typography>
-      </Author>
-      <Description>{post.description}</Description>
+        <p className="ml-auto sm:ml-0">{new Date(post.createdDate).toDateString()}</p>
+      </div>
+      
+      <p className="break-words">{post.description}</p>
+      
       <Comments post={post} />
 
       {/* Delete confirmation dialog */}
-      <Dialog open={isDeleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
-        <DialogTitle>Delete Confirmation</DialogTitle>
-        <DialogContent>
-          <Typography>Are you sure you want to delete this Seek?</Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDeleteDialogOpen(false)} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={confirmDelete} color="primary">
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </Container>
+      {isDeleteDialogOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
+            <h3 className="text-lg font-medium mb-4">Delete Confirmation</h3>
+            <p className="mb-6">Are you sure you want to delete this Seek?</p>
+            <div className="flex justify-end space-x-3">
+              <button 
+                onClick={() => setDeleteDialogOpen(false)} 
+                className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors duration-300"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={confirmDelete} 
+                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors duration-300"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 

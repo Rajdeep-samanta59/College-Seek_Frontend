@@ -1,69 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TextField, Box, Button, Typography, styled } from '@mui/material';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import IconButton from '@mui/material/IconButton';
 import { API } from '../../service/api';
 import { DataContext } from '../../context/DataProvider';
 import Logo from '../../web_images/Logo.png';
-
-const Component = styled(Box)`
-    width: 400px;
-    margin: auto;
-    box-shadow: 5px 2px 5px 2px rgb(0 0 0/ 0.6);
-`;
-
-const Image = styled('img')({
-    width: 250,
-    display: 'flex',
-    margin: 'auto',
-    padding: '50px 0 0',
-    borderRadius: '5px',
-});
-
-const Wrapper = styled(Box)`
-    padding: 25px 35px;
-    display: flex;
-    flex: 1;
-    overflow: auto;
-    flex-direction: column;
-    & > div,
-    & > button,
-    & > p {
-        margin-top: 20px;
-    }
-`;
-
-const LoginButton = styled(Button)`
-    text-transform: none;
-    background: #fb641b;
-    color: #fff;
-    height: 48px;
-    border-radius: 2px;
-`;
-
-const SignupButton = styled(Button)`
-    text-transform: none;
-    background: #fff;
-    color: #2874f0;
-    height: 48px;
-    border-radius: 2px;
-    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
-`;
-
-const Text = styled(Typography)`
-    color: #878787;
-    font-size: 12px;
-`;
-
-const Error = styled(Typography)`
-    font-size: 10px;
-    color: #ff6161;
-    line-height: 0;
-    margin-top: 10px;
-    font-weight: 600;
-`;
 
 const loginInitialValues = {
     username: '',
@@ -180,102 +119,150 @@ const Login = ({ setUserAuthenticated }) => {
     };
 
     return (
-        <Component>
-            <Box>
-                <Image src={Logo} alt="Seek" />
+        <div className="w-96 mx-auto shadow-2xl">
+            <div>
+                <img 
+                    src={Logo} 
+                    alt="Seek" 
+                    className="w-64 flex mx-auto pt-12 pb-0 rounded"
+                />
                 {account === 'login' ? (
-                    <Wrapper>
-                        <TextField
-                            variant="standard"
-                            value={login.username}
-                            onChange={(e) => onValueChange(e)}
-                            name="username"
-                            label="Enter Email ID"
-                        />
-                        <TextField
-                            variant="standard"
-                            value={login.password}
-                            onChange={(e) => onValueChange(e)}
-                            name="password"
-                            label="Enter Password"
-                            type={showPassword ? 'text' : 'password'}
-                            InputProps={{
-                                endAdornment: (
-                                    <IconButton
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        edge="end"
-                                    >
-                                        {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                    </IconButton>
-                                ),
-                            }}
-                        />
+                    <div className="px-9 py-6 flex flex-1 overflow-auto flex-col space-y-5">
+                        <div className="relative">
+                            <input
+                                type="text"
+                                value={login.username}
+                                onChange={(e) => onValueChange(e)}
+                                name="username"
+                                className="w-full px-3 py-2 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors duration-300"
+                                placeholder="Enter Email ID"
+                            />
+                        </div>
+                        <div className="relative">
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                value={login.password}
+                                onChange={(e) => onValueChange(e)}
+                                name="password"
+                                className="w-full px-3 py-2 pr-10 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors duration-300"
+                                placeholder="Enter Password"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 hover:bg-gray-100 rounded"
+                            >
+                                {showPassword ? (
+                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                                    </svg>
+                                ) : (
+                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>
+                                    </svg>
+                                )}
+                            </button>
+                        </div>
 
-                        {error && <Error>{error}</Error>}
+                        {error && <p className="text-xs text-red-500 leading-none mt-2.5 font-semibold">{error}</p>}
                         {loading ? (
-                            <Button variant="contained">
+                            <button className="w-full bg-gray-400 text-white py-3 rounded text-sm font-medium">
                                 Logging In
-                            </Button>
+                            </button>
                         ) : (
-                            <LoginButton variant="contained" onClick={() => loginUser()}>
+                            <button 
+                                className="w-full bg-orange-500 text-white py-3 rounded text-sm font-medium hover:bg-orange-600 transition-colors duration-300"
+                                onClick={() => loginUser()}
+                            >
                                 Login
-                            </LoginButton>
+                            </button>
                         )}
-                        <Text style={{ textAlign: 'center' }}>OR</Text>
-                        <SignupButton onClick={() => toggleSignup()} style={{ marginBottom: 50 }}>
+                        <p className="text-gray-500 text-xs text-center">OR</p>
+                        <button 
+                            className="w-full bg-white text-blue-600 py-3 rounded text-sm font-medium shadow-md hover:bg-gray-50 transition-colors duration-300 mb-12"
+                            onClick={() => toggleSignup()}
+                        >
                             Create an account
-                        </SignupButton>
-                    </Wrapper>
+                        </button>
+                    </div>
                 ) : (
-                    <Wrapper>
-                        <TextField
-                            variant="standard"
-                            value={signup.username}
-                            onChange={(e) => onInputChange(e)}
-                            name="username"
-                            label="Enter Email ID"
-                        />
-                        <TextField
-                            variant="standard"
-                            value={signup.password}
-                            onChange={(e) => onInputChange(e)}
-                            name="password"
-                            label="Enter Password"
-                            type={showPassword ? 'text' : 'password'}
-                            InputProps={{
-                                endAdornment: (
-                                    <IconButton
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        edge="end"
-                                    >
-                                        {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                    </IconButton>
-                                ),
-                            }}
-                        />
-                        <TextField
-                            variant="standard"
-                            value={signup.name}
-                            onChange={(e) => onInputChange(e)}
-                            name="name"
-                            label="Enter Name"
-                        />
-                        <Button onClick={handleButtonClick}>Generate Password</Button>
+                    <div className="px-9 py-6 flex flex-1 overflow-auto flex-col space-y-5">
+                        <div className="relative">
+                            <input
+                                type="text"
+                                value={signup.username}
+                                onChange={(e) => onInputChange(e)}
+                                name="username"
+                                className="w-full px-3 py-2 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors duration-300"
+                                placeholder="Enter Email ID"
+                            />
+                        </div>
+                        <div className="relative">
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                value={signup.password}
+                                onChange={(e) => onInputChange(e)}
+                                name="password"
+                                className="w-full px-3 py-2 pr-10 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors duration-300"
+                                placeholder="Enter Password"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 hover:bg-gray-100 rounded"
+                            >
+                                {showPassword ? (
+                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                                    </svg>
+                                ) : (
+                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>
+                                    </svg>
+                                )}
+                            </button>
+                        </div>
+                        <div className="relative">
+                            <input
+                                type="text"
+                                value={signup.name}
+                                onChange={(e) => onInputChange(e)}
+                                name="name"
+                                className="w-full px-3 py-2 border-b-2 border-gray-300 focus:border-blue-500 outline-none transition-colors duration-300"
+                                placeholder="Enter Name"
+                            />
+                        </div>
+                        <button 
+                            className="w-full bg-gray-200 text-gray-700 py-2 rounded text-sm font-medium hover:bg-gray-300 transition-colors duration-300"
+                            onClick={handleButtonClick}
+                        >
+                            Generate Password
+                        </button>
 
-                        {error && <Error>{error}</Error>}
+                        {error && <p className="text-xs text-red-500 leading-none mt-2.5 font-semibold">{error}</p>}
                         {loading ? (
-                            <Button variant="contained">Signing Up</Button>
+                            <button className="w-full bg-gray-400 text-white py-3 rounded text-sm font-medium">
+                                Signing Up
+                            </button>
                         ) : (
-                            <SignupButton onClick={() => signupUser()}>Signup</SignupButton>
+                            <button 
+                                className="w-full bg-white text-blue-600 py-3 rounded text-sm font-medium shadow-md hover:bg-gray-50 transition-colors duration-300"
+                                onClick={() => signupUser()}
+                            >
+                                Signup
+                            </button>
                         )}
-                        <Text style={{ textAlign: 'center' }}>OR</Text>
-                        <LoginButton variant="contained" onClick={() => toggleSignup()}>
+                        <p className="text-gray-500 text-xs text-center">OR</p>
+                        <button 
+                            className="w-full bg-orange-500 text-white py-3 rounded text-sm font-medium hover:bg-orange-600 transition-colors duration-300"
+                            onClick={() => toggleSignup()}
+                        >
                             Already have an account
-                        </LoginButton>
-                    </Wrapper>
+                        </button>
+                    </div>
                 )}
-            </Box>
-        </Component>
+            </div>
+        </div>
     );
 };
 

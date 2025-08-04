@@ -1,55 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { styled, Box, TextareaAutosize, Button, InputBase, FormControl, Typography } from '@mui/material';
-import { AddCircle as Add } from '@mui/icons-material';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { DataContext } from '../../context/DataProvider';
 import { API } from '../../service/api';
-
-const Container = styled(Box)(({ theme }) => ({
-    margin: '50px 100px',
-    [theme.breakpoints.down('md')]: {
-        margin: 0,
-    },
-}));
-
-const Image = styled('img')({
-    width: '100%',
-    height: '50vh',
-    objectFit: 'cover',
-    cursor: 'pointer',
-});
-
-const StyledFormControl = styled(FormControl)`
-    margin-top: 10px;
-    display: flex;
-    flex-direction: row;
-`;
-
-const InputTextField = styled(InputBase)`
-    flex: 1;
-    font-size: 25px;
-`;
-
-const InputTextFieldFile = styled(InputBase)`
-    flex: 1;
-    margin: 0 30px;
-    font-size: 17px;
-`;
-
-const CloudUploadIconPoint=styled(CloudUploadIcon)`
-    cursor:pointer;
-`
-
-const Textarea = styled(TextareaAutosize)`
-    width: 100%;
-    border: none;
-    margin-top: 50px;
-    font-size: 18px;
-    &:focus-visible {
-        outline: none;
-    }
-`;
 
 const initialPost = {
     title: '',
@@ -130,36 +82,75 @@ const CreatePosts = () => {
     };
 
     return (
-        <Container>
-            <Image src={url} alt="post" onClick={handleImageClick} />
-            <StyledFormControl>
-                <label htmlFor="fileInput">
-                    <Add fontSize="large" color="action" cursor="pointer" />
+        <div className="mx-12 my-12 md:mx-0">
+            <img 
+                src={url} 
+                alt="post" 
+                onClick={handleImageClick}
+                className="w-full h-96 object-cover cursor-pointer"
+            />
+            
+            <div className="mt-2.5 flex flex-row">
+                <label htmlFor="fileInput" className="cursor-pointer">
+                    <svg className="w-8 h-8 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+                    </svg>
                 </label>
                 <input
                     type="file"
                     id="fileInput"
-                    style={{ display: 'none'}}
+                    className="hidden"
                     onChange={(e) => setFile(e.target.files[0])}
                 />
-                <InputTextField onChange={(e) => handleChange(e)} name="title" placeholder="Title" />
+                <input
+                    type="text"
+                    onChange={(e) => handleChange(e)} 
+                    name="title" 
+                    placeholder="Title"
+                    className="flex-1 text-2xl border-none outline-none"
+                />
                 {loading ? (
-                    <Button variant="contained" color="primary" disabled>
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50" disabled>
                         Uploading...
-                    </Button>
+                    </button>
                 ) : (
-                    <Button onClick={() => savePost()} variant="contained" color="primary">
+                    <button 
+                        onClick={() => savePost()} 
+                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300"
+                    >
                         Publish
-                    </Button>
+                    </button>
                 )}
-            </StyledFormControl>
-            {error && <Typography color="error">{error}</Typography>}
-            <StyledFormControl>
-                <CloudUploadIconPoint onClick={handleCloudUploadIconClick} fontSize="large" color="action" />
-                <InputTextFieldFile onChange={(e) => handleChange(e)} name="fileUp" placeholder="File Upload Link" />
-            </StyledFormControl>
-            <Textarea minRows={5} placeholder="Space you Seek..." name="description" onChange={(e) => handleChange(e)} />
-        </Container>
+            </div>
+            
+            {error && <p className="text-red-500 mt-2">{error}</p>}
+            
+            <div className="mt-2.5 flex flex-row">
+                <button 
+                    onClick={handleCloudUploadIconClick} 
+                    className="cursor-pointer"
+                >
+                    <svg className="w-8 h-8 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+                    </svg>
+                </button>
+                <input
+                    type="text"
+                    onChange={(e) => handleChange(e)} 
+                    name="fileUp" 
+                    placeholder="File Upload Link"
+                    className="flex-1 mx-8 text-lg border-none outline-none"
+                />
+            </div>
+            
+            <textarea 
+                rows={5} 
+                placeholder="Space you Seek..." 
+                name="description" 
+                onChange={(e) => handleChange(e)}
+                className="w-full border-none mt-12 text-lg focus:outline-none resize-none"
+            />
+        </div>
     );
 };
 
